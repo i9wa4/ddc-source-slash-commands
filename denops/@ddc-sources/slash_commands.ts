@@ -19,8 +19,8 @@ export class Source extends BaseSource<Params> {
   }: GatherArguments<Params>): Promise<Item[]> {
     const params = sourceParams as Params;
 
-    // Check if input starts with /
-    if (!context.input.startsWith("/")) {
+    // Check if input contains /
+    if (!context.input.includes("/")) {
       return [];
     }
 
