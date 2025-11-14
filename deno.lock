@@ -1,0 +1,71 @@
+{
+  "version": "5",
+  "specifiers": {
+    "jsr:@core/unknownutil@4.3": "4.3.0",
+    "jsr:@core/unknownutil@^4.3.0": "4.3.0",
+    "jsr:@denops/core@7": "7.0.1",
+    "jsr:@denops/std@7.5": "7.5.1",
+    "jsr:@shougo/ddc-vim@9.5.0": "9.5.0",
+    "jsr:@std/assert@~1.0.2": "1.0.14",
+    "jsr:@std/fs@^1.0.8": "1.0.19",
+    "jsr:@std/internal@^1.0.10": "1.0.10",
+    "jsr:@std/internal@^1.0.9": "1.0.10",
+    "jsr:@std/path@^1.0.8": "1.1.2",
+    "jsr:@std/path@^1.1.1": "1.1.2",
+    "jsr:@std/semver@1": "1.0.5",
+    "jsr:@std/ulid@1": "1.0.0"
+  },
+  "jsr": {
+    "@core/unknownutil@4.3.0": {
+      "integrity": "538a3687ffa81028e91d148818047df219663d0da671d906cecd165581ae55cc"
+    },
+    "@denops/core@7.0.1": {
+      "integrity": "ede39eec60de6d5bf0fbc0337d3e420a9689cc48afea8c71752e6c0fb630bde0"
+    },
+    "@denops/std@7.5.1": {
+      "integrity": "ddf3ed8ba0da876584dfa6aa893e88d735db507483788cdb002d7164a8943c3c",
+      "dependencies": [
+        "jsr:@core/unknownutil@^4.3.0",
+        "jsr:@denops/core",
+        "jsr:@std/semver",
+        "jsr:@std/ulid"
+      ]
+    },
+    "@shougo/ddc-vim@9.5.0": {
+      "integrity": "ffd8d8f10482cc1b31bc91f756484617fad875d919ab8f5b6ab644ed1cf48923",
+      "dependencies": [
+        "jsr:@core/unknownutil@4.3",
+        "jsr:@denops/std",
+        "jsr:@std/assert"
+      ]
+    },
+    "@std/assert@1.0.14": {
+      "integrity": "68d0d4a43b365abc927f45a9b85c639ea18a9fab96ad92281e493e4ed84abaa4",
+      "dependencies": [
+        "jsr:@std/internal@^1.0.10"
+      ]
+    },
+    "@std/fs@1.0.19": {
+      "integrity": "051968c2b1eae4d2ea9f79a08a3845740ef6af10356aff43d3e2ef11ed09fb06",
+      "dependencies": [
+        "jsr:@std/internal@^1.0.9",
+        "jsr:@std/path@^1.1.1"
+      ]
+    },
+    "@std/internal@1.0.10": {
+      "integrity": "e3be62ce42cab0e177c27698e5d9800122f67b766a0bea6ca4867886cbde8cf7"
+    },
+    "@std/path@1.1.2": {
+      "integrity": "c0b13b97dfe06546d5e16bf3966b1cadf92e1cc83e56ba5476ad8b498d9e3038",
+      "dependencies": [
+        "jsr:@std/internal@^1.0.10"
+      ]
+    },
+    "@std/semver@1.0.5": {
+      "integrity": "529f79e83705714c105ad0ba55bec0f9da0f24d2f726b6cc1c15e505cc2c0624"
+    },
+    "@std/ulid@1.0.0": {
+      "integrity": "d41c3d27a907714413649fee864b7cde8d42ee68437d22b79d5de4f81d808780"
+    }
+  }
+}
