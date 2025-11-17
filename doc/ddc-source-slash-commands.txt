@@ -7,8 +7,10 @@ License: MIT License
 CONTENTS					*ddc-source-slash-commands-contents*
 
 INTRODUCTION			|ddc-source-slash-commands-introduction|
+FEATURES			|ddc-source-slash-commands-features|
 INSTALL				|ddc-source-slash-commands-install|
 EXAMPLES			|ddc-source-slash-commands-examples|
+SOURCE OPTIONS			|ddc-source-slash-commands-source-options|
 PARAMS				|ddc-source-slash-commands-params|
 
 
@@ -23,12 +25,42 @@ your commands directory.
 
 
 ==============================================================================
+FEATURES					*ddc-source-slash-commands-features*
+
+- Completion only triggers when "/" is at line start or after a space
+- Prevents unwanted completion in file paths (e.g., "path/to/file")
+- Supports hyphenated command names (e.g., "/test-setup", "/test-run")
+- Works with both matcher_head (prefix matching) and matcher_fuzzy (fuzzy
+  matching)
+
+
+==============================================================================
 INSTALL						*ddc-source-slash-commands-install*
 
 This plugin requires the following:
 
 - Vim/Neovim with denops.vim
 - ddc.vim
+
+Using dein.vim:
+>
+	call dein#add('vim-denops/denops.vim')
+	call dein#add('Shougo/ddc.vim')
+	call dein#add('Shougo/ddc-matcher_head')  " or tani/ddc-fuzzy
+	call dein#add('i9wa4/ddc-source-slash-commands')
+<
+
+Using lazy.nvim:
+>
+	{
+	  'i9wa4/ddc-source-slash-commands',
+	  dependencies = {
+	    'vim-denops/denops.vim',
+	    'Shougo/ddc.vim',
+	    'Shougo/ddc-matcher_head',  -- or tani/ddc-fuzzy
+	  },
+	}
+<
 
 
 ==============================================================================
@@ -43,6 +75,8 @@ Basic configuration:
 	  \   'mark': '[cmd]',
 	  \   'matchers': ['matcher_head'],
 	  \   'minAutoCompleteLength': 1,
+	  \   'isVolatile': v:true,
+	  \   'forceCompletionPattern': '\/[a-zA-Z0-9_-]*',
 	  \ }})
 <
 
@@ -54,6 +88,67 @@ With custom parameters:
 	  \   'extensions': ['.md', '.txt'],
 	  \ }})
 <
+
+Fuzzy matching support:
+>
+	" Install tani/ddc-fuzzy
+	call dein#add('tani/ddc-fuzzy')
+
+	" Change matcher to fuzzy
+	call ddc#custom#patch_global('sourceOptions', {
+	  \ 'slash_commands': {
+	  \   'matchers': ['matcher_fuzzy'],
+	  \   'mark': '[cmd]',
+	  \   'minAutoCompleteLength': 1,
+	  \   'isVolatile': v:true,
+	  \   'forceCompletionPattern': '\/[a-zA-Z0-9_-]*',
+	  \ }})
+<
+
+This enables patterns like "/cmd" → "/command1".
+
+
+==============================================================================
+SOURCE OPTIONS				*ddc-source-slash-commands-source-options*
+
+These are common ddc.vim source options that work well with this plugin.
+
+					*ddc-source-slash-commands-option-mark*
+mark		(string)
+		Completion menu marker.
+
+		Default: "[cmd]"
+
+					*ddc-source-slash-commands-option-matchers*
+matchers	(string[])
+		Matcher to use.
+		- ["matcher_head"]: Prefix matching (e.g., "/my" matches
+		  "/my-commit")
+		- ["matcher_fuzzy"]: Fuzzy matching (e.g., "/mcom" matches
+		  "/my-commit")
+
+		For fuzzy matching, install tani/ddc-fuzzy:
+		https://github.com/tani/ddc-fuzzy
+
+		Default: ["matcher_head"]
+
+			*ddc-source-slash-commands-option-minAutoCompleteLength*
+minAutoCompleteLength	(number)
+		Minimum input length to trigger completion.
+
+		Recommended: 1
+
+			*ddc-source-slash-commands-option-isVolatile*
+isVolatile	(boolean)
+		Always gather candidates on every input change.
+
+		Recommended: v:true
+
+		*ddc-source-slash-commands-option-forceCompletionPattern*
+forceCompletionPattern	(string)
+		Pattern to force completion trigger.
+
+		Recommended: '\/[a-zA-Z0-9_-]*'
 
 
 ==============================================================================

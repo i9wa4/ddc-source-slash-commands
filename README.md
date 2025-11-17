@@ -1,17 +1,15 @@
 # ddc-source-slash-commands
 
-Slash command (custom prompt) completion source for ddc.vim
+Slash command completion for ddc.vim.
 
-## Overview
+Type `/` at line start or after space to complete Claude Code slash commands.
 
-This plugin provides completion for Claude Code slash commands (also known as "custom prompts" in Codex CLI) in ddc.vim.
+## Features
 
-When you type `/` in your buffer, it will suggest available slash commands from your commands directory.
-
-## Requirements
-
-- Vim/Neovim with denops.vim
-- ddc.vim
+- Completion triggers when `/` is at line start or after a space
+- Prevents unwanted completion in file paths
+- Supports hyphenated command names
+- Works with both prefix and fuzzy matching
 
 ## Installation
 
@@ -20,6 +18,7 @@ Using dein.vim
 ```vim
 call dein#add('vim-denops/denops.vim')
 call dein#add('Shougo/ddc.vim')
+call dein#add('Shougo/ddc-matcher_head')  " or tani/ddc-fuzzy for fuzzy matching
 call dein#add('i9wa4/ddc-source-slash-commands')
 ```
 
@@ -31,6 +30,7 @@ Using lazy.nvim
   dependencies = {
     'vim-denops/denops.vim',
     'Shougo/ddc.vim',
+    'Shougo/ddc-matcher_head',  -- or tani/ddc-fuzzy for fuzzy matching
   },
 }
 ```
@@ -47,34 +47,14 @@ call ddc#custom#patch_global('sourceOptions', {
   \   'mark': '[cmd]',
   \   'matchers': ['matcher_head'],
   \   'minAutoCompleteLength': 1,
+  \   'isVolatile': v:true,
+  \   'forceCompletionPattern': '\/[a-zA-Z0-9_-]*',
   \ }})
 ```
 
-With custom parameters
+For fuzzy matching, change `matchers` to `matcher_fuzzy`.
 
-```vim
-call ddc#custom#patch_global('sourceParams', {
-  \ 'slash_commands': {
-  \   'commandsDir': '~/ghq/github.com/i9wa4/dotfiles/dot.config/claude/commands',
-  \   'extensions': ['.md'],
-  \ }})
-```
-
-## Parameters
-
-- `commandsDir`
-    - Default: `~/.config/claude/commands`
-    - Directory path containing slash command files
-- `extensions`
-    - Default: `[".md"]`
-    - File extensions to include in completion
-
-## How it works
-
-1. When you type `/` in your buffer, the plugin activates
-2. It reads all files from `commandsDir` with specified extensions
-3. File names (without extensions) are converted to slash commands
-4. For example, `CONTRIBUTING.md` becomes `/CONTRIBUTING`
+See `:help ddc-source-slash-commands` for more options.
 
 ## License
 
