@@ -2,6 +2,7 @@
   "name": "@i9wa4/ddc-source-slash-commands",
   "version": "0.1.0",
   "exports": "./denops/@ddc-sources/slash_commands.ts",
+  "lock": false,
   "tasks": {
     "check": "deno check denops/@ddc-sources/slash_commands.ts"
   },
