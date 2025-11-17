@@ -19,8 +19,10 @@ export class Source extends BaseSource<Params> {
   }: GatherArguments<Params>): Promise<Item[]> {
     const params = sourceParams as Params;
 
-    // Check if input contains /
-    if (!context.input.includes("/")) {
+    // Check if input contains / at the beginning or after a space
+    // Pattern: (start of line OR space) followed by / and optional word characters
+    const slashMatch = context.input.match(/(^|\s)(\/[a-zA-Z0-9_-]*)$/);
+    if (!slashMatch) {
       return [];
     }
 
