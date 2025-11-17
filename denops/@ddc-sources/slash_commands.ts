@@ -1,6 +1,7 @@
 import {
   BaseSource,
   type GatherArguments,
+  type OnCompleteDoneArguments,
 } from "jsr:@shougo/ddc-vim@9.5.0/source";
 import type { Item } from "jsr:@shougo/ddc-vim@9.5.0/types";
 import { basename, join } from "jsr:@std/path@^1.0.8";
@@ -12,6 +13,18 @@ type Params = {
 };
 
 export class Source extends BaseSource<Params> {
+  override getCompletePosition(args: GatherArguments<Params>): Promise<number> {
+    // Find the position of / at the beginning or after a space
+    const slashMatch = args.context.input.match(/(^|\s)(\/[a-zA-Z0-9_-]*)$/);
+    if (!slashMatch) {
+      return Promise.resolve(-1);
+    }
+
+    // Return the position of / (accounting for leading space if present)
+    const leadingLength = slashMatch[1].length;
+    return Promise.resolve(args.context.input.length - slashMatch[2].length);
+  }
+
   override async gather({
     denops,
     context,
@@ -19,8 +32,10 @@ export class Source extends BaseSource<Params> {
   }: GatherArguments<Params>): Promise<Item[]> {
     const params = sourceParams as Params;
 
-    // Check if input contains /
-    if (!context.input.includes("/")) {
+    // Check if input contains / at the beginning or after a space
+    // Pattern: (start of line OR space) followed by / and optional word characters
+    const slashMatch = context.input.match(/(^|\s)(\/[a-zA-Z0-9_-]*)$/);
+    if (!slashMatch) {
       return [];
     }
 
@@ -44,7 +59,8 @@ export class Source extends BaseSource<Params> {
 
         // Check if file has target extension
         if (params.extensions.includes(ext)) {
-          const word = "/" + basename(fileName, ext);
+          const commandName = basename(fileName, ext);
+          const word = "/" + commandName;
           items.push({ word });
         }
       }
