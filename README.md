@@ -54,6 +54,15 @@ call ddc#custom#patch_global('sourceOptions', {
 
 For fuzzy matching, change `matchers` to `matcher_fuzzy`.
 
+## Parameters
+
+- `commandsDir`
+    - Default: `~/.config/claude/commands`
+    - Directory path containing slash command files
+- `extensions`
+    - Default: `[".md"]`
+    - File extensions to include in completion
+
 See `:help ddc-source-slash-commands` for more options.
 
 ## License
